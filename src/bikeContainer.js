@@ -14,8 +14,8 @@ BikeContainer.prototype.dock = function(bike) {
   };
 };
 
-BikeContainer.prototype.release = function() {
-  this.bikes.shift();
+BikeContainer.prototype.release = function(bike) {
+  this.bikes.splice(bike);
 };
 
 BikeContainer.prototype.bikeCount = function(){
@@ -35,5 +35,14 @@ BikeContainer.prototype.availableBikes = function() {
 BikeContainer.prototype._isFull = function() {
   return this.capacity === this.bikes.length; 
 };
+
+BikeContainer.prototype.transfer = function(bikes, container) {
+  var self = this;
+ var transferred =  _.each(bikes, function(bike){self.dock(bike); container.release(bike)});
+};
+
+// def transfer bikes, from: container
+//    bikes.each {|bike| self.dock(bike); from.release(bike)}
+//   end
 
 module.exports = BikeContainer;

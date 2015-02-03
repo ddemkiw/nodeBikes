@@ -1,5 +1,6 @@
 var BikeContainer = require('../src/bikeContainer.js');
 var Bike = require('../src/bike.js');
+var Van = require('../src/van.js');
 var _ = require('underscore')._;
 
 describe ('BikeContainer', function(){
@@ -10,6 +11,8 @@ describe ('BikeContainer', function(){
     container = new BikeContainer();
     bike = new Bike();
     bike2 = new Bike();
+    van = new Van();
+
   });
 
    dockBrokenBike = function () {
@@ -23,6 +26,15 @@ describe ('BikeContainer', function(){
     while(i < 10){
       bike = new Bike();
       container.dock(bike);
+      i++;
+    }
+  };
+
+  dockThreeBikes = function(){
+    var i = 0;
+    while(i < 3){
+      bike = new Bike();
+      van.dock(bike);
       i++;
     }
   };
@@ -55,7 +67,6 @@ describe ('BikeContainer', function(){
     dockTenBikes();
     container.dock(bike2);
     expect(container.bikeCount()).toEqual(10);
-
   });
 
   it('should provide a list of broken bikes', function(){
@@ -69,6 +80,16 @@ describe ('BikeContainer', function(){
     container.dock(bike);
     container.dock(bike2);
     expect(container.availableBikes().length).toEqual(2);
+  });
+
+   it('should be able to transfer from another container', function(){
+    var redBike = new Bike();
+    redBike.break();
+    van.dock(redBike);
+    dockThreeBikes();
+    expect(container.bikes.length).toEqual(0)
+    container.transfer(van.availableBikes(), van);
+    expect(container.bikes.length).toEqual(3);
   });
 
 });
