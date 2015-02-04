@@ -4,14 +4,14 @@ var _ = require('underscore')._;
 function BikeContainer(){
   this.bikes = [];
   this.capacity = 10;
-};
+}
 
 BikeContainer.prototype.dock = function(bike) {
   if(this._isFull()){
-    return this.bikes
+    return this.bikes;
   }else{
-  this.bikes.push(bike)
-  };
+  this.bikes.push(bike);
+  }
 };
 
 BikeContainer.prototype.release = function(bike) {
@@ -23,12 +23,12 @@ BikeContainer.prototype.bikeCount = function(){
 };
 
 BikeContainer.prototype.brokenBikes = function() {
- var broken = _.filter(this.bikes, function(bike){ return bike.isBroken()});
+ var broken = _.filter(this.bikes, function(bike){ return bike.isBroken();});
  return broken;
 };
 
 BikeContainer.prototype.availableBikes = function() {
-  var readyBikes = _.filter(this.bikes, function(bike){ return !bike.isBroken(); });
+  var readyBikes = _.filter(this.bikes, function(bike){ return !bike.isBroken();});
   return readyBikes;
 };
 
@@ -38,11 +38,7 @@ BikeContainer.prototype._isFull = function() {
 
 BikeContainer.prototype.transfer = function(bikes, container) {
   var self = this;
- var transferred =  _.each(bikes, function(bike){self.dock(bike); container.release(bike)});
+ var transferred =  _.each(bikes, function(bike){self.dock(bike); container.release(bike);});
 };
-
-// def transfer bikes, from: container
-//    bikes.each {|bike| self.dock(bike); from.release(bike)}
-//   end
 
 module.exports = BikeContainer;
